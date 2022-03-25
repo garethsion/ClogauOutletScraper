@@ -57,7 +57,7 @@ class ClogauScraper:
         cur_prices = []
         urls = []
             
-        for url in url_list[0:4]:
+        for url in url_list:
 
             page = requests.get(url)
             soup = BeautifulSoup(page.text, 'html.parser')
@@ -72,11 +72,25 @@ class ClogauScraper:
             json_object = json.loads(mpn_soup.contents[0])
             mpns.append(json_object['mpn'] if json_object['mpn'] else 'None')
 
+            sold_out_button = soup.find(name='button', attrs={'class':'productAddToBasket productAddToBasket-soldOut'})
+
             rrp = soup.find(name='p', attrs={'class':"productPrice_rrp"})
-            rrps.append(rrp.text.strip('RRP: ') if rrp else 'None')
+            if rrp:
+                rrps.append(rrp.text.strip('RRP: '))
+            else:
+                if sold_out_button:
+                    rrps.append('SoldOut')
+                else:
+                    rrps.append('None')
 
             cur_pr = soup.find(name='p', attrs={'class':"productPrice_price"})
-            cur_prices.append(cur_pr.text.strip() if cur_pr else 'None')
+            if cur_pr:
+                cur_prices.append(cur_pr.text.strip())
+            else:
+                if sold_out_button:
+                    cur_prices.append('SoldOut')
+                else:
+                    cur_prices.append('None')
 
             urls.append(url)
             time.sleep(1 + random.random())
