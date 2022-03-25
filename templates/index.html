@@ -1,45 +1,8 @@
 {% extends "layout.html" %}
 
 {% block body %}
-  <a href="/results" type="submit" name="scrapebButton" id="scrapeButton" value="scrape" class="btn btn-success">Scrape</a>
-  <div class="mt-4">Press button to scrape. This may take a while. Do not close the window.</div>
-  <div class="progress">
-    <div class="progress-bar progress-bar-striped bg-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-  </div>
-  <div id="targetLayer" style="display:none;"></div>
-  <div id="loader-icon" style="display:none;"><img src="/static/images/loader.gif" /></div>
-
-  <script>
-    $(document).ready(function(){
-        $('scrapeButton').submit(function(event){
-                event.preventDefault();
-                $('#loader-icon').show();
-                $('#targetLayer').hide();
-                $(this).ajaxSubmit({
-                    target: '#targetLayer',
-                    beforeSubmit:function(){
-                        $('.progress-bar').width('50%');
-                    },
-                    uploadProgress: function(event, position, total, percentageComplete)
-                    {
-                        $('.progress-bar').animate({
-                            width: percentageComplete + '%'
-                        }, {
-                            duration: 1000
-                        });
-                    },
-                    success:function(data){
-                        $('#loader-icon').hide();
-                        $('#targetLayer').show();
-                        $('#targetLayer').append(data.htmlresponse);
-                    },
-                    resetForm: true
-                });
-            return false;
-            });
-        });
-    </script>
-
+    <a href="/results" id="scrapeButton" class="btn btn-success">Scrape</a>
+    <div class="mt-4">Press button to scrape. This may take a while. Do not close the window.</div>
 {% endblock %}
 
 

@@ -12,8 +12,6 @@ import json
 import gspread
 from datetime import datetime
 
-import sys
-
 class ClogauScraper:
 
     def write_to_googlesheets(self, df, filename):
@@ -61,7 +59,7 @@ class ClogauScraper:
         cur_prices = []
         urls = []
             
-        for url in url_list[0:3]:
+        for url in url_list:
 
             page = requests.get(url)
             soup = BeautifulSoup(page.text, 'html.parser')
@@ -115,8 +113,6 @@ class ClogauScraper:
         now = datetime.now()
         dt_string = now.strftime("%Y%m%d_%H%M%S")
         self.filename = dt_string + '_CloguaGold_Product_Scrape'
-
-        print('Hello world!', file=sys.stderr)
 
         self.write_to_googlesheets(self.df, self.filename)
 
