@@ -33,3 +33,4 @@ In the source code folder, there is a folder named 'config'. In here are the ser
 
 7. When the app has run, you will be directed to a new web page with the results listed. This can be downloaded as a csv file locally, and you can search through the results for specific entries. The data will have been automatically saved in the linked google drive account. 
 
+### To Integrate App into Azure Server
