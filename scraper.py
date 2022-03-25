@@ -35,7 +35,7 @@ class ClogauScraper:
                 sheets_email = f.readline()
             sh.share(sheets_email, perm_type='user', role='writer')
         except Exception as e:
-            print(e.message, e.args)
+            print(e)
 
         return 
     
@@ -57,7 +57,7 @@ class ClogauScraper:
         cur_prices = []
         urls = []
             
-        for url in url_list:
+        for url in url_list[0:4]:
 
             page = requests.get(url)
             soup = BeautifulSoup(page.text, 'html.parser')
