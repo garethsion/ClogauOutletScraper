@@ -57,7 +57,7 @@ class ClogauScraper:
         cur_prices = []
         urls = []
             
-        for url in url_list:
+        for url in url_list[0:3]:
 
             page = requests.get(url)
             soup = BeautifulSoup(page.text, 'html.parser')
