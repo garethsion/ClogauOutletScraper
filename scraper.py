@@ -25,12 +25,15 @@ class ClogauScraper:
         '''
 
         try:
-            sa = gspread.service_account('service_account.json')
+            sa = gspread.service_account('config/service_account.json')
             sh = sa.create(filename)
             wks = sh.worksheet('Sheet1')
 
             wks.update([df.columns.values.tolist()] + df.values.tolist())
-            sh.share('garethsion@googlemail.com', perm_type='user', role='writer')
+            
+            with open('config/email.txt','r') as f:
+                sheets_email = f.readline()
+            sh.share(sheets_email, perm_type='user', role='writer')
         except Exception as e:
             print(e.message, e.args)
 
