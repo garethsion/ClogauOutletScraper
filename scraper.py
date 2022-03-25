@@ -12,6 +12,7 @@ import json
 import gspread
 from datetime import datetime
 
+import sys
 
 class ClogauScraper:
 
@@ -31,8 +32,11 @@ class ClogauScraper:
 
             wks.update([df.columns.values.tolist()] + df.values.tolist())
             
-            with open('config/email.txt','r') as f:
-                sheets_email = f.readline()
+            f = open('config/email.json')
+            configdata = json.load(f)
+            sheets_email = configdata['config']['email']
+            f.close()
+
             sh.share(sheets_email, perm_type='user', role='writer')
         except Exception as e:
             print(e)
@@ -111,6 +115,9 @@ class ClogauScraper:
         now = datetime.now()
         dt_string = now.strftime("%Y%m%d_%H%M%S")
         self.filename = dt_string + '_CloguaGold_Product_Scrape'
+
+        print('Hello world!', file=sys.stderr)
+
         self.write_to_googlesheets(self.df, self.filename)
 
 if __name__ == '__main__':
