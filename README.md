@@ -34,3 +34,36 @@ In the source code folder, there is a folder named 'config'. In here are the ser
 7. When the app has run, you will be directed to a new web page with the results listed. This can be downloaded as a csv file locally, and you can search through the results for specific entries. The data will have been automatically saved in the linked google drive account. 
 
 ### To Integrate App into Azure Server
+
+1. Create a new Azure Web App. This can be done in the Azure portal, by entering "app services" in the search bar, and then selecting "Create" in the app services page.
+
+2. In the create app page, fill out the form as below:
+    * Create a new Resource Group
+    * Name - give this an appropriate name of your choice.
+    * Runtime Stack - Python 3.9
+    * Region - UK South
+    * App Service Plan - you can set this as desired. Basic is probably fine for the purposes of this project.
+    * Select 'Apply', and then you can review and create the mew resource group.
+
+3. Get credential for deploying the web application. The code is packaged as a zip file, so can be uploaded to Azure by an HTTP client such as 'Postman'. If you don't already have postman, this can be downloaded from 'https://www.postman.com/downloads/'.
+    * To deploy the zip file to Azure, first you need to make sure that the file will be built upon deployment. To do this, navigate to the 'Configuration' tab in the portal, and under 'Application Settings', select 'New Setting'.
+    * In the new dialogue box, create a new setting  with the name `SCM_DO_BUILD_DURING_DEPLOYMENT`, and the value as `true`.
+    * Select save to save the settings.
+    * Next, you need the FTPS credentials to upload the zip file via postman. These can be found by navigating to the 'Deployment Centre' tab, and subsequently the 'FTPS' tab. Here you are given a username and password. The required part of the username is only what follows the final '\' character, starting with a '$' symbol, e.g. $clogau_scraper.
+    * Make a note of the email address of the application from the resource group.
+
+4. Deploy the application with Postman. 
+    * Create a new request.
+    * Select **POST** as the request type. 
+    * Enter the url https://\<app-name\>.scm.azurewebsites.net/api/zipdeploy where <app-name> is the name of the web app.
+    * Navigate to the 'Authorization' tab, and enter the username and password from the FTPS credentials found previously. 
+    * Navigate to the 'Body' tab. Set the content type as 'Binary', and select file to upload the zip file. 
+    * Select Send. The file will upload to your Azure app. This may take a minute or two, depending on bandwidth. 
+
+5. Open the web application.
+    * Now the web app should have been deployed. To check, open a browser, and enter the url http://<app-name>.azurewebsites.net. The app should be here now. If the default Azure page shows, wait for a moment and refresh the browser.
+
+
+
+
+
