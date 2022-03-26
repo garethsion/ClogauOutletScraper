@@ -6,8 +6,12 @@
 
 This application scrapes the product pages from the Clogau Outlet website, and stores the data into a google sheet. This is run from a Flask application either locally, or integrated into a web server. 
 
-### Configuration
+## Configuration
 In the source code folder, there is a folder named 'config'. In here are the service_account.json credentials from the google sheets API, and the email of the linked google sheets account. These can be changed in desired.
+
+## Running the Application
+
+The app can be run either in a browser on a local machine, or integrated into a web server. Details of how to achieve each are given below. Note, upon executing the app by selecting the 'Scrape' button in the browser window, the app will run, but will take quite a bit of time to complete. This is due to the inherent time overhead of scraping a webpage, and due to random time intervals encoded between each scrape to prevent overloading the website, and also triggering any anti-scraping policy. It is important therefore to not close/refresh the browser, or let the computer sleep. Just allow the app to run. An improvement to the app would be to incorporate a progress bar, however this is not so trivial due to the nature of how the Flask framework handles server requests. Hence it has not been included in this iteration of the app. 
 
 ### To Run the App Locally
 * You need to have python version 3.9 or higher installed on the computer. 
