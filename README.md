@@ -15,7 +15,35 @@ The app can be run either in a browser on a local machine, or integrated into a 
 
 ### To Run the App Locally
 * You need to have python version 3.9 or higher installed on the computer. 
-* You need to be able to access a command line terminal - either CMD in Windows, or Terminal in Mac OS/ Linux.
+* Along with python3, you will need to have Anaconda downloaded.
+* You need to be able to access a command line terminal - either an anaconda terminal in Windows, or Terminal in Mac OS/ Linux.
+
+**Downloading Using Anaconda**
+
+1. Open an anaconda terminal, and navigate to the directory containing the code
+2. In the terminal, enter the command:
+
+    `python -m pip install -r requirements.txt`
+
+This should download the required python libraries to your computer. If this does not work, the the packages can be manually downloaded by running the command:
+
+    `python -m pip install flask pandas numpy requests bs4 gspread datetime`
+
+Now the required dependencies should be installed on your computer.
+
+3. Now the application can be launched. In the terminal, run the command 
+
+
+    `flask run`
+
+
+4. When the command executes, a message will appear in the terminal instructing which local address the app is running on (e.g. http://127.0.0.1:5000/). Open a browser, and enter this address into the address bar. If your browser gives an error message stating that a secure connection cannot be made, try a different browser such as Chrome.
+
+5. You should now see the running web application. To scrape, press the 'Scrape' button. This will take a while to complete, so don't close the window or let the computer sleep.
+
+6. When the app has run, you will be directed to a new web page with the results listed. This can be downloaded as a csv file locally, and you can search through the results for specific entries. The data will have been automatically saved in the linked google drive account. 
+
+**Downloading in the Terminal (Mac OSX / Linux / Git Bash)**
 
 1. Open a command line terminal 
 2. Navigate to the directory of this code
