@@ -25,7 +25,7 @@ class ClogauScraper:
 
         try:
             sa = gspread.service_account('config/service_account.json')
-            sh = sa.create(filename)
+            sh = sa.open(filename)
             wks = sh.worksheet('Sheet1')
 
             wks.update([df.columns.values.tolist()] + df.values.tolist())
@@ -59,8 +59,8 @@ class ClogauScraper:
         cur_prices = []
         urls = []
             
-        for url in url_list[0:3]:
-
+        for url in url_list[0:5]:
+            print("Scraping " + url)
             page = requests.get(url)
             soup = BeautifulSoup(page.text, 'html.parser')
             
@@ -97,37 +97,26 @@ class ClogauScraper:
             urls.append(url)
             time.sleep(1 + random.random())
 
+        now = datetime.now()
+        dt_string = now.strftime("%Y-%m-%d")
+        dt_array = [dt_string] * len(url_list)
         # Create pandas dataframe
         data = {'Product':products,
                     'SKU':skus,
                     'MPN':mpns,
                     'RRP':rrps,
                     'CurrentPrice':cur_prices, 
-                    'URL':urls}
+                    'URL':urls,
+                    'Date':dt_string}
         self.df = pd.DataFrame(data=data)
 
         self.results = []
         for i in range(len(self.df)):
             self.results.append(self.df.iloc[i].tolist())
         
-        now = datetime.now()
-        dt_string = now.strftime("%Y%m%d_%H%M%S")
-        self.filename = dt_string + '_CloguaGold_Product_Scrape'
+        self.filename = 'CloguaGold_Product_Scrape'
 
-        # self.write_to_googlesheets(self.df, self.filename)
-
-        sa = gspread.service_account('config/service_account.json')
-        sh = sa.create(filename)
-        wks = sh.worksheet('Sheet1')
-
-        wks.update([df.columns.values.tolist()] + df.values.tolist())
-        
-        f = open('config/email.json')
-        configdata = json.load(f)
-        sheets_email = configdata['config']['email']
-        f.close()
-
-        sh.share(sheets_email, perm_type='user', role='writer')
+        self.write_to_googlesheets(self.df, self.filename)
 
 if __name__ == '__main__':
     scraper = ClogauScraper()
